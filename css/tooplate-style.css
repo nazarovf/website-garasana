@@ -1,0 +1,432 @@
+body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 300;
+  color: white;
+  margin: 0; /* Pastikan margin body 0 untuk menghindari scrollbar yang tidak diinginkan */
+  padding: 0;
+  position: relative; /* Tetap relative jika ada elemen yang menggunakan position absolute relatif terhadap body */
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+#tm-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/pop-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+#tm-bg:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Tambahkan overlay jika diinginkan, contoh: background-color: rgba(0, 0, 0, 0.5); */
+}
+
+#tm-wrap {
+  display: flex; /* Jadikan flex container */
+  flex-direction: column; /* Susun item secara vertikal */
+  min-height: 100vh; /* Pastikan minimal setinggi viewport */
+  justify-content: space-between; /* Mendorong footer ke bawah */
+}
+
+p {
+  line-height: 1.9;
+  letter-spacing: 1px;
+}
+
+.tm-main-content {
+  flex-grow: 1; /* Mengambil ruang yang tersisa */
+  display: flex;
+  align-items: center; /* Menengahkan konten utama secara vertikal */
+  justify-content: center; /* Menengahkan konten utama secara horizontal */
+  padding: 50px 15px; /* Sesuaikan padding jika perlu */
+  width: 100%; /* Pastikan mengambil lebar penuh */
+  box-sizing: border-box; /* Pastikan padding tidak menambah lebar total */
+}
+
+.tm-site-header-col {
+  display: flex;
+  align-items: center;
+}
+
+.tm-site-header {
+  margin: 10px;
+  text-align: center; /* Pusat text di header */
+  width: 100%;
+}
+
+/* Container untuk header dan grid, agar konten di dalamnya bisa center */
+.container.tm-site-header-container {
+  display: flex;
+  flex-direction: column; /* Mengatur item di dalam container secara vertikal */
+  align-items: center; /* Menengahkan item secara horizontal */
+  text-align: center; /* Menengahkan teks di header */
+}
+
+.tm-nav ul {
+  padding-left: 0;
+  display: block;
+}
+
+.tm-nav li {
+  list-style: none;
+  display: inline-block;
+  /* Border di sini mungkin akan redundant jika ada di .tm-nav-link */
+  /* border: 1px solid white; */
+  /* float: left; /* Mungkin perlu diubah di mobile, akan diatasi dengan flexbox di .grid */
+  margin: 10px;
+}
+
+.tm-nav-link {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Tambahkan ini untuk menengahkan ikon/teks secara vertikal */
+  width: 165px;
+  height: 165px;
+  text-align: center;
+  border: 1px solid white;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  padding: 10px; /* Tambahkan padding agar ikon/teks tidak mepet tepi */
+}
+
+.tm-nav-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+}
+
+.fa-3x {
+  font-size: 2.5em;
+  margin-bottom: 5px; /* Sesuaikan jarak antara ikon dan teks */
+}
+
+.product {
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.product:hover {
+  background: #59585a;
+  color: #a9a9a9;
+}
+
+.tm-nav-icon {
+  display: block;
+  margin-bottom: 25px; /* Ini akan di-override oleh fa-3x margin-bottom di atas */
+}
+
+/* Expanding Grid Items from Codrops */
+.tm-page-title {
+  font-weight: 300;
+  margin-bottom: 20px; /* Tambahkan margin bawah untuk judul halaman */
+}
+
+.content {
+  width: 100%; /* Ambil lebar penuh di mobile */
+  max-width: 900px; /* Batasi lebar di desktop agar tidak terlalu lebar */
+  margin-left: auto; /* Untuk menengahkan di desktop */
+  margin-right: auto; /* Untuk menengahkan di desktop */
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Tengahkan item grid */
+}
+
+.grid__item {
+  margin: 10px;
+}
+
+.product {
+  position: relative;
+  cursor: pointer;
+}
+
+.product__bg {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+}
+
+.product__bg,
+.product__description {
+  opacity: 0;
+  position: absolute;
+}
+
+.product__description {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none; /* Akan diubah display: block saat terbuka */
+}
+
+.tm-fa-close {
+  font-size: 30px;
+}
+
+/* Perbaikan untuk detail panel (.details) agar memenuhi layar di mobile dan selalu di tengah */
+.details {
+  position: fixed; /* Ganti dari absolute ke fixed agar selalu di atas viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* Pastikan di atas semua elemen lain */
+  display: flex;
+  justify-content: center; /* Pusatkan konten secara horizontal */
+  align-items: center; /* Pusatkan konten secara vertikal */
+  padding: 15px; /* Sesuaikan padding agar konten tidak mepet tepi */
+  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran total */
+  display: none; /* Sembunyikan secara default */
+  pointer-events: none; /* Jangan merespon event klik saat tertutup */
+}
+
+.details--open {
+  pointer-events: auto; /* Aktifkan event klik saat terbuka */
+}
+
+.details > * {
+  position: relative;
+  opacity: 0;
+}
+
+.details__bg {
+  background: #424146; /* Warna background untuk detail panel */
+  padding: 50px;
+  transform-origin: center center !important; /* Pastikan transformasi berpusat */
+  width: 100%; /* Ambil lebar penuh di mobile */
+  max-width: 900px; /* Batasi lebar di desktop */
+  height: auto; /* Biarkan tinggi menyesuaikan konten */
+  max-height: 90vh; /* Batasi tinggi agar tidak melebihi viewport */
+  overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
+}
+
+.details__close {
+  position: absolute;
+  top: 5px; /* Sesuaikan posisi X */
+  right: 0; /* Sesuaikan posisi Y */
+  border: 0;
+  background: none;
+  margin: 1em;
+  cursor: pointer;
+  font-size: 0.85em;
+  color: white;
+  z-index: 1001;
+}
+
+/* Team */
+.tm-reverse-sm {
+  flex-direction: row;
+}
+
+/* Our Work */
+.tm-slider-img-link {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.slick-dots li button:before {
+  font-size: 20px;
+  color: white;
+  opacity: 1;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: -40px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 0.75;
+  color: deepskyblue;
+}
+
+/* Contact */
+.form-control {
+  font-size: 1.1rem;
+  border-radius: 0;
+  border: none;
+  background-color: #4d4d50;
+  color: white;
+  padding: 0.75rem;
+}
+
+.form-control:focus {
+  color: #cecece;
+  background-color: #4c4c4e;
+  border-color: transparent;
+  box-shadow: none; /* Hapus box-shadow default pada focus */
+}
+
+.tm-col-email {
+  padding-left: 0;
+}
+
+.tm-btn-submit {
+  background-color: #006599;
+}
+
+.tm-btn-gray {
+  background-color: #515152;
+  color: white;
+}
+
+.tm-btn-gray:hover {
+  background-color: #727174;
+  color: white;
+}
+
+.btn {
+  padding: 0.5rem 2.4rem;
+  font-size: 1.2rem;
+  border-radius: 0;
+}
+
+.btn-primary {
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background-color: #0e7fb9;
+  border-color: transparent;
+}
+
+/* Footer */
+footer {
+  position: relative; /* Dengan flexbox di #tm-wrap, relative sudah cukup */
+  bottom: 0;
+  text-align: center;
+  left: 0;
+  right: 0;
+  width: 100%; /* Pastikan footer mengambil lebar penuh */
+  padding: 20px 15px; /* Tambahkan padding agar tidak terlalu mepet */
+  box-sizing: border-box;
+}
+
+.tm-text-highlight {
+  color: white;
+}
+.tm-text-highlight:hover {
+  color: red;
+}
+
+.tm-copyright-text {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: inline-block;
+  padding: 10px 30px;
+}
+
+a,
+button {
+  transition: all 0.3s ease;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .container {
+      max-width: 900px;
+  }
+}
+
+/* Media query untuk tablet/mobile yang lebih besar */
+@media (min-width: 768px) and (max-width: 991px) {
+  .tm-nav-link {
+      width: 145px;
+      height: 145px;
+  }
+  .fa-3x {
+      font-size: 2.2em;
+  }
+}
+
+/* Media query untuk mobile */
+@media (max-width: 767px) {
+  .container {
+      max-width: 100%; /* Ambil lebar penuh di mobile */
+  }
+  .tm-site-header-col {
+      margin-bottom: 30px; /* Tambah jarak di bawah header di mobile */
+  }
+  .tm-site-header {
+      text-align: center;
+  }
+  .tm-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Tengahkan item navigasi */
+  }
+  .grid {
+      justify-content: center; /* Tengahkan item grid */
+  }
+  .tm-col-email {
+      padding-left: 15px; /* Tetap ada jika Anda ingin padding di sini */
+  }
+  .tm-reverse-sm {
+      flex-direction: column-reverse; /* Biarkan ini jika perilaku ini diinginkan di mobile */
+  }
+  .tm-slider-img-link {
+      padding-left: 5px;
+      padding-right: 5px;
+  }
+  .details__bg {
+      padding: 30px 15px; /* Kurangi padding di mobile */
+  }
+  .details__close {
+      top: 10px;
+      right: 10px;
+      margin: 0; /* Hapus margin agar lebih mudah diatur */
+  }
+}
+
+@media (max-width: 419px) {
+  .tm-nav-link {
+      width: 120px;
+      height: 120px;
+  }
+  .fa-3x {
+      font-size: 2em;
+  }
+  h1 {
+      font-size: 2.2rem;
+  }
+  .tm-copyright-text {
+      padding: 8px 20px;
+  }
+}
